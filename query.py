@@ -24,14 +24,28 @@ def query_all(resource, search=None):
 
     response = requests.get(f'{base_url}/{resource}/?format=json{search_string}', headers=headers)
     if response.status_code != 200:
-        raise Exception('resource not found!')
+        raise Exception('http request error!')
     json_data = json.loads(response.content)
     results = json_data['results']
 
     while json_data['next']:
         response = requests.get(json_data['next'], headers=headers)
         if response.status_code != 200:
-            raise Exception('resource not found!')
+            raise Exception('http request error!')
         json_data = json.loads(response.content)
         results += json_data['results']
     return results
+
+
+def query(resource, id):
+
+    response = requests.get(f'{base_url}/{resource}/{id}/?format=json', headers=headers)
+    if response.status_code != 200:
+        raise Exception('http request error!')
+    result = json.loads(response.content)
+
+    for key, value in result.items():
+        if key is 'detail' and value is 'Not found':
+            raise Exception('resource not found!')
+
+    return result

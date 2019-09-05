@@ -1,7 +1,8 @@
-from swapi import get_all, ResourceType
+from swapi import get_all, get, ResourceType
 
 if __name__ == '__main__':
 
+    '''
     print(f'\n[1] Number of Species Test:\n')
 
     films = get_all(ResourceType.FILM, 'Revenge of the Sith')
@@ -11,6 +12,12 @@ if __name__ == '__main__':
            break
 
     print(f'{len(target["species"])} species in Revenge of the Sith')
+    '''
+
+    print(f'\n[1] Number of Species Test:\n')
+
+    film = get(ResourceType.FILM, 6)
+    print(f'{len(film["species"])} species in Revenge of the Sith')
 
     print(f'\n[2] Films Episode Id Test:\n')
 
